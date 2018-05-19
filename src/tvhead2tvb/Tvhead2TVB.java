@@ -23,7 +23,7 @@ public final class Tvhead2TVB extends Plugin implements SettingsTab {
 		"Exports program schedules from TV-Browser to Tvheadend",
 		"Felix J. Ogris (fjo@ogris.de)",
 		"GPL",
-		"http://ogris.de/tvhead2tvb");
+		"https://ogris.de/tvhead2tvb");
 	private boolean configured = false;
 	private final JTextField tvheadUrlField = new JTextField();
 	private String tvheadUrl;
