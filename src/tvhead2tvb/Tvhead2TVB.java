@@ -1,10 +1,24 @@
 package tvhead2tvb;
 
-import java.awt.event.*;
-import java.net.*;
-import java.util.*;
-import javax.swing.*;
-import devplugin.*;
+import java.awt.event.ActionEvent;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Properties;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import devplugin.ActionMenu;
+import devplugin.Plugin;
+import devplugin.PluginInfo;
+import devplugin.Program;
+import devplugin.SettingsTab;
+import devplugin.Version;
+import util.ui.EnhancedPanelBuilder;
+import com.jgoodies.forms.layout.FormLayout;
 
 /**
  *
@@ -22,25 +36,17 @@ public final class Tvhead2TVB extends Plugin implements SettingsTab {
 	private boolean configured = false;
 	private final JTextField tvheadUrlField = new JTextField();
 	private String tvheadUrl;
-	private final JPanel settingsPanel = new JPanel();
+	private final EnhancedPanelBuilder settingsPanel;
 	private final long mainThreadId = Thread.currentThread().getId();
 
 	public Tvhead2TVB() {
-		final JPanel serverPanel = new JPanel();
-		serverPanel.setBorder(BorderFactory.createTitledBorder("Server settings"));
-		final JLabel urlLabel = new JLabel("Url:");
-		final GroupLayout serverLayout = new GroupLayout(serverPanel);
-		serverLayout.setHorizontalGroup(serverLayout.createSequentialGroup().addGroup(
-			serverLayout.createSequentialGroup().addComponent(urlLabel).addComponent(
-				tvheadUrlField, GroupLayout.PREFERRED_SIZE, 200, Integer.MAX_VALUE)));
-		serverLayout.setVerticalGroup(serverLayout.createSequentialGroup().addGroup(
-			serverLayout.createBaselineGroup(false, false).addComponent(urlLabel).addComponent(
-				tvheadUrlField)));
-		serverPanel.setLayout(serverLayout);
-
-		/* settings panel */
-		settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.PAGE_AXIS));
-		settingsPanel.add(serverPanel);
+                settingsPanel = new EnhancedPanelBuilder(new FormLayout("left:pref, 23dlu, pref:grow"));
+                settingsPanel.addSeparatorRowFull("Server settings");
+                settingsPanel.addRow();
+                settingsPanel.addLabel("URL:");
+                settingsPanel.nextColumn();
+                settingsPanel.nextColumn();
+                settingsPanel.add(tvheadUrlField);
 	}
 
 	private void checkSettings(final boolean showDialog) {
@@ -98,7 +104,7 @@ public final class Tvhead2TVB extends Plugin implements SettingsTab {
 	@Override
 	public JPanel createSettingsPanel() {
 		tvheadUrlField.setText(tvheadUrl);
-		return settingsPanel;
+		return settingsPanel.getPanel();
 	}
 
 	@Override
@@ -169,4 +175,9 @@ public final class Tvhead2TVB extends Plugin implements SettingsTab {
 
 		return new ActionMenu(action);
 	}
+
+        @Override
+        public final String getPluginCategory() {
+                return CATEGORY_OTHER;
+        }
 }
