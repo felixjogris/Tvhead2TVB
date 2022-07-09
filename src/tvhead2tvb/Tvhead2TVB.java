@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tvhead2tvb;
 
 import java.awt.event.*;
@@ -17,7 +12,7 @@ import devplugin.*;
  */
 public final class Tvhead2TVB extends Plugin implements SettingsTab {
 
-	private final static Version VERSION = new Version(1, 0, true);
+	private final static Version VERSION = new Version(1, 1, true);
 	private final static PluginInfo INFO = new PluginInfo(Tvhead2TVB.class,
 		"Tvhead2TVB",
 		"Exports program schedules from TV-Browser to Tvheadend",
@@ -158,7 +153,10 @@ public final class Tvhead2TVB extends Plugin implements SettingsTab {
 					Plugin.getPluginManager().showSettings(plugin);
 				} else if (cmd.equals(cmdRecord)) {
 					recordProgram(program);
-				}
+				} else if (cmd.equals("<html>" + cmdRecord + "</html>")){
+                                        // called from program side menu
+                                        recordProgram(program);
+                                }
 			}
 		};
 
